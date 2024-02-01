@@ -1,0 +1,5 @@
+/* Hide scrollbar but keep functionality */
+.element-with-invisible-scrollbar::-webkit-scrollbar {
+    width: 0;  /* make scrollbar transparent */
+  }
+  
