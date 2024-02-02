@@ -11,29 +11,31 @@ export default function Page() {
     <>
       <div className=" sm:hidden h-screen w-full bg-gray-200  flex flex-wrap items-stretch justify-center ">
         <div className="w-full bg-[#605BFF] h-16 p-2 text-3xl text-gray-200 font-bold flex items-center justify-start gap-3">
-          <Image
-            src="/Images/logo.png"
-            alt="logo"
-            width={2000}
-            height={2000}
-            className="rounded-full object-contain w-10 h-10 "
-          />
+          <Link href="/" >
+            <Image
+              src="/Images/logo.png"
+              alt="logo"
+              width={2000}
+              height={2000}
+              className="rounded-full object-contain w-10 h-10 "
+            />
+          </Link>
           Base
         </div>
         <div>
           <SignIn />
         </div>
         <div className="flex flex-wrap items-center justify-center gap-10 text-4xl ">
-          <Link href="/">
+          <Link href="/" className=" scale-110 duration-300 ease-out " >
             <RiGithubFill />
           </Link>
-          <Link href="/">
+          <Link href="/" className=" scale-110 duration-300 ease-out " >
             <FaTwitterSquare />
           </Link>
-          <Link href="/">
+          <Link href="/" className=" scale-110 duration-300 ease-out " >
             <FaLinkedin />
           </Link>
-          <Link href="/">
+          <Link href="/" className=" scale-110 duration-300 ease-out " >
             <IoLogoDiscord />
           </Link>
         </div>
@@ -59,16 +61,16 @@ export default function Page() {
               BASE
             </span>
             <div className="flex flex-wrap items-center justify-center gap-12 text-3xl ">
-              <Link href="/">
+              <Link href="/" className=" scale-110 duration-300 ease-out " >
                 <RiGithubFill />
               </Link>
-              <Link href="/">
+              <Link href="/" className=" scale-110 duration-300 ease-out " >
                 <FaTwitterSquare />
               </Link>
-              <Link href="/">
+              <Link href="/" className=" scale-110 duration-300 ease-out " >
                 <FaLinkedin />
               </Link>
-              <Link href="/">
+              <Link href="/" className=" scale-110 duration-300 ease-out " >
                 <IoLogoDiscord />
               </Link>
             </div>
