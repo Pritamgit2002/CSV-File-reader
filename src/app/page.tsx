@@ -21,11 +21,11 @@ const page = (props: Props) => {
         <div className="h-screen w-full flex flex-col items-center justify-center gap-y-6 ">
           <UserButton afterSignOutUrl="/" />
           <span className="text-4xl font-bold flex items-center justify-center gap-1 ">
-            <div className=" text-yellow-400 ">
+            <div className=" text-yellow-400  hidden sm:inline-block">
               <FaSmileBeam />
             </div>
             Welcome, {user?.fullName}
-            <div className=" text-pink-400">
+            <div className=" text-pink-400 hidden sm:inline-block">
               <MdOutlineCelebration />
             </div>
           </span>

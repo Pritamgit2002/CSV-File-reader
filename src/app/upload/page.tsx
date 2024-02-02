@@ -2,7 +2,7 @@
 import "./style.css";
 import SideBar from "@/components/sideBar";
 import { BiBell } from "react-icons/bi";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
@@ -54,6 +54,7 @@ const Upload = () => {
   const [showPopover, setShowPopover] = useState(false);
   const [popover, setPopover] = useState(null);
   const [showPopoverIndex, setShowPopoverIndex] = useState(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
 
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
@@ -107,6 +108,23 @@ const Upload = () => {
       return updatedSelectedContent;
     });
   };
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        popoverRef.current &&
+        !popoverRef.current.contains(event.target as Node)
+      ) {
+        setShowPopoverIndex(null);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleDeleteOption = (rowIndex: number, cell: string) => {
     setSelectedContent((prevSelectedContent) => {
@@ -163,13 +181,15 @@ const Upload = () => {
       <SideBar />
       <div className="flex flex-col  w-full px-9 ">
         <div className="flex items-center justify-between pt-4   ">
-          <span className="text-xl sm:text-2xl font-medium pl-1 ">Upload CSV</span>
-          <div className="flex items-center justify-center gap-1 text-right">
-            <div>
-              <UserButton afterSignOutUrl="/"/>
-            </div>
-            <div className="  text-lg sm:text-2xl ">
+          <span className="text-xl sm:text-2xl font-medium pl-1 ">
+            Upload CSV
+          </span>
+          <div className="flex items-center justify-center gap-2 text-right">
+            <div className="  text-2xl ">
               <BiBell />
+            </div>
+            <div>
+              <UserButton afterSignOutUrl="/" />
             </div>
           </div>
         </div>
@@ -230,120 +250,120 @@ const Upload = () => {
           {selectedFile && (
             <>
               {/* <div className=" rounded-xl bg-gray-300"> */}
-                <Table className=" relative w-8/12 mx-auto   ">
-                  {selectedFile && (
-                    <TableHeader className=" pointer-events-none static  w-full bg-gray-300 rounded-t-xl 	">
-                      <TableRow>
-                        <TableHead className="lg:w-[100px] font-semibold text-base text-black ">
-                          id
-                        </TableHead>
-                        <TableHead className=" lg:w-60 font-semibold text-base text-black ">
-                          Links
-                        </TableHead>
-                        <TableHead className="lg:w-32  font-semibold text-base text-black ">
-                          Prefix
-                        </TableHead>
-                        <TableHead className="lg:w-60 font-semibold text-base text-black  ">
-                          Select Tags
-                        </TableHead>
-                        <TableHead className=" font-semibold text-base text-black">
-                          Selected Tags
-                        </TableHead>
-                      </TableRow>
-                    </TableHeader>
-                  )}
-                  <TableBody className="overflow-y-auto bg-white ">
-                    {csvData
-                      .slice(1)
-                      .slice(startIndex, endIndex)
-                      .map((row, rowIndex) => (
-                        <TableRow
-                          key={rowIndex}
-                          className=" "
-                        >
-                          <TableCell className="font-medium h-10">
-                            {row.map((cell, cellIndex) => (
-                              <>
-                                {cellIndex === 0 && (
-                                  <TableCell className=" font-medium">
-                                    {cell}
-                                  </TableCell>
-                                )}
-                              </>
-                            ))}
-                          </TableCell>
-                          <TableCell className=" lg:w-60 h-10 ">
-                            {row.map((cell, cellIndex) => (
-                              <>
-                                {cellIndex === 1 && (
-                                  <TableCell className="">
-                                    <Link
-                                       href={`https://${cell}`}
-                                      target="_blank"
-                                      className="text-indigo-500 hover:underline"
-                                    >
-                                      {cell}
-                                    </Link>
-                                  </TableCell>
-                                )}
-                              </>
-                            ))}
-                          </TableCell>
-                          <TableCell className=" lg:w-32 h-10 ">
-                            {row.map((cell, cellIndex) => (
-                              <>
-                                {cellIndex === 2 && (
-                                  <TableCell className="">{cell}</TableCell>
-                                )}
-                              </>
-                            ))}
-                          </TableCell>
-
-                          <TableCell className="lg:w-64 h-10 ">
-                            <button
-                              className="py-2 px-5 border-2 border-black rounded-xl flex items-center justify-center gap-2 text-black font-medium "
-                              onClick={() => handlePopoverToggleTag(rowIndex)}
-                            >
-                                  Select Tags
-                                 <FaAngleUp /> 
-                            </button>
-                            {showPopoverIndex === rowIndex && (
-                              <div className="h-52 w-36 text-center absolute z-50 shadow-lg shadow-gray-300 overflow-y-auto element-with-invisible-scrollbar bg-neutral-50 mt-1 rounded-lg space-y-2 px-3 ">
-                                {row.slice(3, 13).map((cell, cellIndex) => (
-                                  <div
-                                    key={cellIndex}
-                                    className="p-2 mt-3  mb-2  space-y-3 cursor-pointer bg-white hover:bg-gray-200 text-left rounded-lg text-base font-semibold "
-                                    onClick={() =>
-                                      handleContentClickTag(rowIndex, cell)
-                                    }
-                                  >
-                                    {cell}
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                          </TableCell>
-
-                          <TableCell className="  flex items-center justify-start gap-2 min-w-20 h-20 ">
-                            {selectedContent[rowIndex] &&
-                              selectedContent[rowIndex].map(
-                                (selectedItem: any, index: any) => (
-                                  <span
-                                    className="p-2 font-medium text-white rounded-lg bg-violet-500 flex items-center justify-center gap-2 cursor-pointer group h-max w-max  duration-200 ease-out "
-                                    onClick={() =>
-                                      handleDeleteOption(rowIndex, selectedItem)
-                                    }
-                                  >
-                                    {selectedItem}
-                                    <RxCross1 />
-                                  </span>
-                                )
+              <Table className=" relative w-8/12 mx-auto   ">
+                {selectedFile && (
+                  <TableHeader className=" pointer-events-none static  w-full bg-gray-300 rounded-t-xl 	">
+                    <TableRow>
+                      <TableHead className="lg:w-[100px] font-semibold text-base text-black ">
+                        id
+                      </TableHead>
+                      <TableHead className=" lg:w-60 font-semibold text-base text-black ">
+                        Links
+                      </TableHead>
+                      <TableHead className="lg:w-32  font-semibold text-base text-black ">
+                        Prefix
+                      </TableHead>
+                      <TableHead className="lg:w-60 font-semibold text-base text-black  ">
+                        Select Tags
+                      </TableHead>
+                      <TableHead className=" font-semibold text-base text-black">
+                        Selected Tags
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                )}
+                <TableBody className="overflow-y-auto bg-white ">
+                  {csvData
+                    .slice(1)
+                    .slice(startIndex, endIndex)
+                    .map((row, rowIndex) => (
+                      <TableRow key={rowIndex} className=" ">
+                        <TableCell className="font-medium h-10">
+                          {row.map((cell, cellIndex) => (
+                            <>
+                              {cellIndex === 0 && (
+                                <TableCell className=" font-medium">
+                                  {cell}
+                                </TableCell>
                               )}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
+                            </>
+                          ))}
+                        </TableCell>
+                        <TableCell className=" lg:w-60 h-10 ">
+                          {row.map((cell, cellIndex) => (
+                            <>
+                              {cellIndex === 1 && (
+                                <TableCell className="">
+                                  <Link
+                                    href={`https://${cell}`}
+                                    target="_blank"
+                                    className="text-indigo-500 hover:underline"
+                                  >
+                                    {cell}
+                                  </Link>
+                                </TableCell>
+                              )}
+                            </>
+                          ))}
+                        </TableCell>
+                        <TableCell className=" lg:w-32 h-10 ">
+                          {row.map((cell, cellIndex) => (
+                            <>
+                              {cellIndex === 2 && (
+                                <TableCell className="">{cell}</TableCell>
+                              )}
+                            </>
+                          ))}
+                        </TableCell>
+
+                        <TableCell key={rowIndex} className="lg:w-64 h-10">
+                          <button
+                            className="py-2 px-5 border-2 border-black rounded-xl flex items-center justify-center gap-2 text-black font-medium popover-button"
+                            onClick={() => handlePopoverToggleTag(rowIndex)}
+                          >
+                            Select Tags
+                            <FaAngleUp />
+                          </button>
+                          {showPopoverIndex === rowIndex && (
+                            <div
+                              ref={popoverRef}
+                              className="h-52 w-36 text-center absolute z-50 shadow-lg shadow-gray-300 overflow-y-auto element-with-invisible-scrollbar bg-neutral-50 mt-1 rounded-lg space-y-2 px-3 popover-container"
+                            >
+                              {row.slice(3, 13).map((cell, cellIndex) => (
+                                <div
+                                  key={cellIndex}
+                                  className="p-2 mt-3 mb-2 space-y-3 cursor-pointer bg-white hover:bg-gray-200 text-left rounded-lg text-base font-semibold"
+                                  onClick={() =>
+                                    handleContentClickTag(rowIndex, cell)
+                                  }
+                                >
+                                  {cell}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </TableCell>
+
+                        <TableCell className="  flex items-center justify-start gap-2 min-w-20 h-20 ">
+                          {selectedContent[rowIndex] &&
+                            selectedContent[rowIndex].map(
+                              (selectedItem: any, index: any) => (
+                                <span
+                                  className="p-2 font-medium text-white rounded-lg bg-violet-500 flex items-center justify-center gap-2 cursor-pointer group h-max w-max  duration-200 ease-out "
+                                  onClick={() =>
+                                    handleDeleteOption(rowIndex, selectedItem)
+                                  }
+                                >
+                                  {selectedItem}
+                                  <RxCross1 />
+                                </span>
+                              )
+                            )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
               {/* </div> */}
               <div className="flex justify-center mt-4 mb-10">
                 <button
