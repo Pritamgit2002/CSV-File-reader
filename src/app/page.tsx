@@ -32,7 +32,7 @@ const page = (props: Props) => {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center mx-auto mt-20  gap-10">
-          <h1 className="text-5xl font-bold">Login To Access</h1>
+          <h1 className=" text-4xl sm:text-5xl font-bold">Login To Access</h1>
 
           <Link href="/upload">
             <Button className="flex items-center justify-center gap-1">
