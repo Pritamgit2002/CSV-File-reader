@@ -19,6 +19,7 @@ import {
 import { RxCross1, RxCross2 } from "react-icons/rx";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { UserButton } from "@clerk/nextjs";
 const content = [
   "Technology",
   "Fashion",
@@ -163,7 +164,10 @@ const Upload = () => {
       <div className="flex flex-col  w-full px-9 ">
         <div className="flex items-center justify-between pt-4   ">
           <span className="text-xl sm:text-2xl font-medium pl-1 ">Upload CSV</span>
-          <div className="flex items-center justify-center text-right gap-0">
+          <div className="flex items-center justify-center gap-1 text-right">
+            <div>
+              <UserButton afterSignOutUrl="/"/>
+            </div>
             <div className="  text-lg sm:text-2xl ">
               <BiBell />
             </div>

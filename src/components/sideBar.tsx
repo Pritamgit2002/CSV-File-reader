@@ -150,7 +150,7 @@ const SideBar = () => {
       {/* Larger Devices */}
       <div className="hidden lg:block">
         <div className=" flex flex-col items-center justify-center gap-y-6 h-screen bg-white border-r-4 border-gray-300/50 ">
-          <div className="flex items-center justify-center gap-3 w-60 pt-8  ">
+          <Link href="/" className="flex items-center justify-center gap-3 w-60 pt-8  ">
             <Image
               src="/Images/Subtract.png"
               alt="logo"
@@ -159,7 +159,7 @@ const SideBar = () => {
               className="rounded-full object-contain w-12 h-12"
             />
             <span className=" text-2xl font-semibold ">Base</span>
-          </div>
+          </Link>
           <div className="h-full w-full flex flex-col gap-y-6 items-start justify-start   ">
             {navLinks.map((index) => (
               <div
