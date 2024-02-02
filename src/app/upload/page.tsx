@@ -344,12 +344,12 @@ const Upload = () => {
                           )}
                         </TableCell>
 
-                        <TableCell className="  flex items-center justify-start gap-2 min-w-20 h-20 ">
+                        <TableCell className="flex items-center justify-start gap-2 min-w-20 h-20 ">
                           {selectedContent[rowIndex] &&
                             selectedContent[rowIndex].map(
                               (selectedItem: any, index: any) => (
                                 <span
-                                  className="p-2 font-medium text-white rounded-lg bg-violet-500 flex items-center justify-center gap-2 cursor-pointer group h-max w-max  duration-200 ease-out "
+                                  className="p-2 font-medium text-white rounded-lg bg-violet-500 flex items-center justify-center gap-2 cursor-pointer group h-max w-max  duration-200 ease-out"
                                   onClick={() =>
                                     handleDeleteOption(rowIndex, selectedItem)
                                   }

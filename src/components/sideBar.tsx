@@ -108,7 +108,7 @@ const SideBar = () => {
               </svg>
             </button>
             {/* Your mobile sidebar content */}
-            <div className=" flex flex-col items-center justify-center gap-y-6 h-screen bg-white ">
+            <div className=" flex flex-col items-center justify-center gap-y-6 h-screen bg-white border-r-4 border-gray-400 ">
               <div className="flex items-center justify-center gap-3 w-60 pt-8  ">
                 <Image
                   src="/Images/Subtract.png"
@@ -126,7 +126,7 @@ const SideBar = () => {
             ${
               index.href == activePath
                 ? "bg-gradient-to-r from-violet-200 from-10% text-indigo-500"
-                : "text-gray-400 hover:text-gray-500 hover:bg-gradient-to-r from-violet-100/35 from-10% "
+                : "text-gray-300/50 hover:text-gray-500 hover:bg-gradient-to-r from-violet-100/35 from-10% "
             } `}
                   >
                     <Link
