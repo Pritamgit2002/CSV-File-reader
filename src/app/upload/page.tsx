@@ -247,6 +247,9 @@ const Upload = () => {
               </>
             )}
           </div>
+
+      {/* CSV file's table */}
+
           {selectedFile && (
             <>
               {/* <div className=" rounded-xl bg-gray-300"> */}
